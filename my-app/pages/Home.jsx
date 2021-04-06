@@ -16,10 +16,19 @@ export default function Home(props) {
         console.log(name, 'name baru');
       } }
       ></TextInput>
+      <View style={styles.button}>
+        <Button title="easy"></Button>
+        <Button title="medium"></Button>
+        <Button title="hard"></Button>
+      </View>
       <Button 
       title="play"
-      onPress={() => props.navigation.navigate('Game')}
+      onPress={() => props.navigation.navigate('Game', name)}
       ></Button>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+
+});

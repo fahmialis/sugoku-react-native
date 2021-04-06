@@ -8,3 +8,7 @@ export default function Finish(props) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+
+});

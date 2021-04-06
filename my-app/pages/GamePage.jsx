@@ -5,6 +5,7 @@ import BoardInput from '../components/BoardInput'
 
 export default function App(props) {
   const [board, setBoard] = useState([]);
+  const { name } = props.route.params
 
   useEffect(() => {
     fetch('https://sugoku.herokuapp.com/board?difficulty=easy')
@@ -17,6 +18,7 @@ export default function App(props) {
     <View style={styles.container}>
       <Text>board : {JSON.stringify(board)}</Text>
       <Text style={styles.text}>sudoku</Text>
+      <Text>hello { name } </Text>
         <View style={styles.board}>
           {
             board.map((row, rowIndex) => {
@@ -35,7 +37,7 @@ export default function App(props) {
 
         <Button 
         title='Submit'
-        onPress={() => props.navigation.navigate('Finish')}
+        onPress={() => props.navigation.replace('Finish')}
         ></Button>  
       <StatusBar style="auto" />
     </View>
