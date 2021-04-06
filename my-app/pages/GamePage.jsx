@@ -18,7 +18,7 @@ export default function App(props) {
   function validate() {
     dispatch(validateBoard())
     // console.log(status, 'stasdafads');
-    if(status === 'unsolved') {
+    if(status == 'unsolved' || status == 'undefined') {
       Alert.alert('Keep trying!',
       "You will get it soon!"
       )
