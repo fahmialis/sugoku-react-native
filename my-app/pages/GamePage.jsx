@@ -1,21 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{ useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { useDispatch, useSelector } from "react-redux";
 import BoardInput from '../components/BoardInput'
+import {getBoardEasy, fetchBoard} from '../store/action'
 
 export default function App(props) {
-  const [board, setBoard] = useState([]);
-  const { name } = props.route.params
+  const board = useSelector ((state) => state.board)
+  const dispatch = useDispatch()
+  const {name, difficulty}  = props.route.params
 
   useEffect(() => {
-    fetch('https://sugoku.herokuapp.com/board?difficulty=easy')
-      .then((res) => res.json())
-      .then((res) => setBoard(res.board))
-      .catch((err) => console.log(err));
+    dispatch(fetchBoard(difficulty))
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>board : {JSON.stringify(board)}</Text>
       <Text style={styles.text}>sudoku</Text>
       <Text>hello { name } </Text>
@@ -37,8 +37,14 @@ export default function App(props) {
 
         <Button 
         title='Submit'
-        onPress={() => props.navigation.replace('Finish')}
+        onPress={() => props.navigation.replace('Finish', {name, difficulty})}
         ></Button>  
+        <Button 
+        title='Solve'
+        ></Button> 
+        <Button 
+        title='Validate'
+        ></Button> 
       <StatusBar style="auto" />
     </View>
   );

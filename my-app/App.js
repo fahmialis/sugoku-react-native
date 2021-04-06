@@ -1,28 +1,27 @@
-import React,{ useState, useEffect } from 'react';
+import React from 'react';
+import Home from './pages/Home'
 import GamePage from './pages/GamePage'
 import Finish from './pages/Finish'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './pages/Home'
+import { Provider } from 'react-redux'
+import store from './store/index.js'
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Game" component={GamePage} />
-      <Stack.Screen name="Finish" component={Finish} />
-      </Stack.Navigator>
-{/* 
-    <View style={styles.container}>
-
-      <GamePage></GamePage>
-
-    </View> */}
-    </NavigationContainer>
+    <Provider store={store}>
+      <Text>test</Text>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Game" component={GamePage} />
+          <Stack.Screen name="Finish" component={Finish} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

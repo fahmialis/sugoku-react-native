@@ -2,22 +2,18 @@ import {createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 
 const initialState = {
-  board:[],
+  board: [],
+  initialBoard: [],
   loading : false
 }
 
 function reducer (state = initialState, action) {
   const { type, payload } = action
-  if (type === 'board/getBoardEasy') {
-    return {...state, board: payload}
-  } else if (type === 'loading/setLoading') {
+  if (type === 'loading/setLoading') {
     return {...state, loading: payload}
-  } else if (type === 'board/getBoardMedium') {
-    return {...state, board: payload}
-  } else if (type === 'board/getBoardHard') {
+  } else if (type === 'board/getBoard') {
     return {...state, board: payload}
   }
-
   return state
 }
 
