@@ -4,7 +4,8 @@ import thunk from 'redux-thunk'
 const initialState = {
   board: [],
   initialBoard: [],
-  loading : false
+  loading: false,
+  status: []
 }
 
 function reducer (state = initialState, action) {
@@ -15,6 +16,8 @@ function reducer (state = initialState, action) {
     return {...state, board: payload}
   } else if (type === 'initialBoard/getInitialBoard') {
     return {...state, initialBoard: payload}
+  } else if( type === 'status/setStatus') {
+    return {...state, status: payload}
   }
   return state
 }

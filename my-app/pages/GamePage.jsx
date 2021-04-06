@@ -1,18 +1,42 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Button, ActivityIndicator, Alert } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import BoardInput from '../components/BoardInput'
 import { fetchBoard, solveBoard, validateBoard } from '../store/action'
 
 export default function App(props) {
   const {board, loading} = useSelector ((state) => state)
-  const dispatch = useDispatch()
+  const status = useSelector((state) => state.status)
   const {name, difficulty}  = props.route.params
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchBoard(difficulty))
   }, []);
+
+  function validate() {
+    dispatch(validateBoard())
+    // console.log(status, 'stasdafads');
+    if(status === 'unsolved') {
+      Alert.alert('Keep trying!',
+      "You will get it soon!"
+      )
+    } else { 
+      Alert.alert(`Congrats ${name}`,
+      `You won SUGOKU on ${difficulty.toUpperCase()}`,
+    [
+      {
+        text: "Play again?",
+        onPress: () => () => props.navigation.navigate('Home'),
+        style: "default",
+      },
+    ]
+      )
+
+    }
+
+  }
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
@@ -42,18 +66,18 @@ export default function App(props) {
           }
         </View>
 
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
             <Button 
             title='Submit'
             onPress={() => props.navigation.replace('Finish', {name, difficulty})}
             ></Button>  
             <Button 
             title='Solve'
-            // onPress={() => dispatch(solveBoard())}
+            onPress={() => dispatch(solveBoard())}
             ></Button> 
             <Button 
             title='Validate'
-            onPress={() => dispatch(validateBoard())}
+            onPress={() => validate()}
             ></Button> 
           </View>
       <StatusBar style="auto" />
