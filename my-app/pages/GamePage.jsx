@@ -3,7 +3,7 @@ import React,{ useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import BoardInput from '../components/BoardInput'
 
-export default function App() {
+export default function App(props) {
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function App() {
           {
             board.map((row, rowIndex) => {
               return (
-                <View style={styles.row}>
+                <View style={styles.row} key={rowIndex}>
                   {
                     row.map((column, columnIndex) => {
                       return <BoardInput initialValue={column} key={`${rowIndex},${columnIndex}`}></BoardInput>
@@ -35,6 +35,7 @@ export default function App() {
 
         <Button 
         title='Submit'
+        onPress={() => props.navigation.navigate('Finish')}
         ></Button>  
       <StatusBar style="auto" />
     </View>
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   row: {
-    backgroundColor: 'green',
+    backgroundColor: 'lightblue',
     flexDirection: 'row',
     height: 40
   }
