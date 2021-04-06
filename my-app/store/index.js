@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 const initialState = {
   board: [],
   initialBoard: [],
-  loading: false,
+  loading: true,
   status: []
 }
 

@@ -26,13 +26,13 @@ export default function Home(props) {
   }, [])
 
   return (
-    <View style={{alignItems:'center'}}>
+    <View style={{alignItems:'center', backgroundColor: 'lightblue', height: 1000}}>
       <Text style={{fontSize:70, marginBottom: 30}}>SUGOKU</Text>
       <Text style={{fontSize:20, marginBottom: 10}}>Name</Text>
       <TextInput
       placeholder="enter your name"
       onChangeText={(value) => setName(value)}
-      style={{borderWidth:1, width: 200, height: 50, marginBottom: 30}}
+      style={{borderWidth:1, width: 200, height: 50, marginBottom: 30, borderColor:'white', backgroundColor: 'white', paddingLeft: 10}}
       ></TextInput>
 
       <Text style={{fontSize:20, marginBottom: 10}}>Choose difficulty level</Text>
@@ -40,7 +40,7 @@ export default function Home(props) {
           items={difficultyLevel}
           defaultValue={difficulty}
           containerStyle={{ height: 50, width: 250 }}
-          style={{ backgroundColor: "transparent", fontSize: 20 }}
+          style={{ backgroundColor: "white", fontSize: 20 }}
           itemStyle={{
             justifyContent: "flex-start",
           }}

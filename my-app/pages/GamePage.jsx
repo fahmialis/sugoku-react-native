@@ -39,10 +39,10 @@ export default function App(props) {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'lightblue', height: 1000 }}>
       {/* <Text>board : {JSON.stringify(board)}</Text> */}
       <View style={{marginBottom: 10, alignItems: 'center'}}>
-        <Text style={styles.text}>SUDOKU</Text>
+        <Text style={styles.text}>SUGOKU</Text>
         <Text>Hello { name ? {name} : 'anon' } </Text>
         <Text>Playing on { difficulty.toUpperCase() } </Text>
       </View>
@@ -50,7 +50,7 @@ export default function App(props) {
         <View style={styles.board}>
           {
             loading ? <View>
-              <ActivityIndicator size="large" />
+              <ActivityIndicator size="large" color="blue"/>
             </View> :
             board.map((row, rowIndex) => {
               return (
@@ -93,16 +93,15 @@ const styles = StyleSheet.create({
     marginTop: 50
   },
   text: {
-    fontSize: 30,
+    fontSize: 40,
     color: 'white',
-    backgroundColor: 'black',
     marginTop: 5,
     alignItems: 'stretch',
     marginBottom: 10
   },
   board: {
     marginHorizontal: 15,
-    marginBottom: 15
+    marginBottom: 20
   },
   row: {
     backgroundColor: 'lightblue',
