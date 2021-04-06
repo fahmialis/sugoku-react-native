@@ -23,7 +23,7 @@ export default function App(props) {
       "You will get it soon!"
       )
     } else { 
-      Alert.alert(`Congrats ${name}`,
+      Alert.alert(`Congrats ${name ? {name} : 'anon'}`,
       `You won SUGOKU on ${difficulty.toUpperCase()}`,
     [
       {
@@ -66,20 +66,20 @@ export default function App(props) {
           }
         </View>
 
-          <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
+          <View style={{flexDirection: 'row', justifyContent:'space-around', marginBottom: 20}}>
             <Button 
-            title='Submit'
-            onPress={() => props.navigation.replace('Finish', {name, difficulty})}
-            ></Button>  
-            <Button 
-            title='Solve'
+            title='Give up'
             onPress={() => dispatch(solveBoard())}
             ></Button> 
             <Button 
-            title='Validate'
+            title='Check?'
             onPress={() => validate()}
             ></Button> 
           </View>
+            <Button
+            title='Skip and win :)'
+            onPress={() => props.navigation.replace('Finish', {name, difficulty})}
+            ></Button>  
       <StatusBar style="auto" />
     </View>
   );
@@ -108,8 +108,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     flexDirection: 'row',
     height: 40
-  },
-  button : {
-    flexDirection : 'row'
   }
 });
