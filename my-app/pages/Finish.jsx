@@ -6,6 +6,10 @@ export default function Finish(props) {
   return (
     <View>
       <Text>Congrats {name} you have finished SUGOKU on {difficulty.toUpperCase()}!!</Text>
+      <Button 
+        title='Play again'
+        onPress={() => props.navigation.navigate('Home')}
+        ></Button> 
     </View>
   )
 }

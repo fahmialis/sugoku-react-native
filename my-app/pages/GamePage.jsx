@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import BoardInput from '../components/BoardInput'
-import {getBoardEasy, fetchBoard} from '../store/action'
+import { fetchBoard, solveBoard, validateBoard } from '../store/action'
 
 export default function App(props) {
-  const board = useSelector ((state) => state.board)
+  const {board, loading} = useSelector ((state) => state)
   const dispatch = useDispatch()
   const {name, difficulty}  = props.route.params
 
@@ -15,12 +15,19 @@ export default function App(props) {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>board : {JSON.stringify(board)}</Text>
-      <Text style={styles.text}>sudoku</Text>
-      <Text>hello { name } </Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+      {/* <Text>board : {JSON.stringify(board)}</Text> */}
+      <View style={{marginBottom: 10, alignItems: 'center'}}>
+        <Text style={styles.text}>SUDOKU</Text>
+        <Text>Hello { name ? {name} : 'anon' } </Text>
+        <Text>Playing on { difficulty.toUpperCase() } </Text>
+      </View>
+      
         <View style={styles.board}>
           {
+            loading ? <View>
+              <ActivityIndicator size="large" />
+            </View> :
             board.map((row, rowIndex) => {
               return (
                 <View style={styles.row} key={rowIndex}>
@@ -35,16 +42,20 @@ export default function App(props) {
           }
         </View>
 
-        <Button 
-        title='Submit'
-        onPress={() => props.navigation.replace('Finish', {name, difficulty})}
-        ></Button>  
-        <Button 
-        title='Solve'
-        ></Button> 
-        <Button 
-        title='Validate'
-        ></Button> 
+          <View style={{flexDirection: 'row'}}>
+            <Button 
+            title='Submit'
+            onPress={() => props.navigation.replace('Finish', {name, difficulty})}
+            ></Button>  
+            <Button 
+            title='Solve'
+            // onPress={() => dispatch(solveBoard())}
+            ></Button> 
+            <Button 
+            title='Validate'
+            onPress={() => dispatch(validateBoard())}
+            ></Button> 
+          </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -59,17 +70,22 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 30,
-    color: 'red',
-    backgroundColor: 'pink',
-    marginTop: 50,
-    alignItems: 'center'
+    color: 'white',
+    backgroundColor: 'black',
+    marginTop: 5,
+    alignItems: 'stretch',
+    marginBottom: 10
   },
   board: {
     marginHorizontal: 15,
+    marginBottom: 15
   },
   row: {
     backgroundColor: 'lightblue',
     flexDirection: 'row',
     height: 40
+  },
+  button : {
+    flexDirection : 'row'
   }
 });

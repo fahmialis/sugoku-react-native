@@ -13,13 +13,10 @@ export default function BoardInput({initialValue}) {
       <TextInput
       style={styles.input}
       onChangeText={(value) => {
-        // console.log(input)
         setInput(value)
       }}
       onSubmitEditing={(value)=>{
-        // console.log(value, 'value');
         setInput(value)
-        // console.log(input, 'berubah');
       }}
       defaultValue={initialValue.toString()}
       keyboardType = 'numeric'

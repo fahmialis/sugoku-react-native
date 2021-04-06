@@ -13,6 +13,8 @@ function reducer (state = initialState, action) {
     return {...state, loading: payload}
   } else if (type === 'board/getBoard') {
     return {...state, board: payload}
+  } else if (type === 'initialBoard/getInitialBoard') {
+    return {...state, initialBoard: payload}
   }
   return state
 }

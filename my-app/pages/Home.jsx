@@ -22,17 +22,20 @@ export default function Home(props) {
   const [name, setName] = useState('')
 
   useEffect(() => {
-    console.log(difficulty)
+    // console.log(difficulty, name)
   }, [])
 
   return (
-    <View>
-      <Text>home</Text>
+    <View style={{alignItems:'center'}}>
+      <Text style={{fontSize:70, marginBottom: 30}}>SUGOKU</Text>
+      <Text style={{fontSize:20, marginBottom: 10}}>Name</Text>
       <TextInput
       placeholder="enter your name"
       onChangeText={(value) => setName(value)}
+      style={{borderWidth:1, width: 200, height: 50, marginBottom: 30}}
       ></TextInput>
 
+      <Text style={{fontSize:20, marginBottom: 10}}>Choose difficulty level</Text>
       <DropDownPicker
           items={difficultyLevel}
           defaultValue={difficulty}
@@ -44,7 +47,7 @@ export default function Home(props) {
           dropDownStyle={{ backgroundColor: "#fafafa" }}
           onChangeItem={(item) => setDifficulty(item.value)}
         />
-      <Button 
+      <Button
       title="play"
       onPress={() => props.navigation.navigate('Game', {name, difficulty})}
       ></Button>
