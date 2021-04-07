@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, View, Text } from "react-native";
+import { useSelector, useDispatch } from 'react-redux'
+import {getBoard} from '../store/action'
 
-export default function BoardInput({initialValue}) {
+
+export default function BoardInput({initialValue, rowIndex, columnIndex}) {
   const [input, setInput] = useState(initialValue)
+  const {board, initialBoard} = useSelector((state) => state)
+  const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   console.log(initialValue, 'initial value');
-  // },[input])
+  function updateBoard() {
+    const newBoard = board.map(row => [...row])
+    newBoard[rowIndex][columnIndex] = Number(input)
+    dispatch(getBoard(newBoard))
+  }
 
   return (
     <View>
       {
-        initialValue === 0 ? 
+        initialBoard[rowIndex][columnIndex] === 0 ? 
         <TextInput
         style={styles.input}
         onChangeText={(value) => {
           setInput(value)
         }}
-        defaultValue={''}
+        onSubmitEditing={() => updateBoard()}
+        defaultValue={initialValue.toString()}
         keyboardType = 'numeric'
         maxLength = {1}
         ></TextInput>
@@ -27,15 +35,6 @@ export default function BoardInput({initialValue}) {
         value={initialValue.toString()}
         >{initialValue.toString()}</Text>
       }
-      {/* <TextInput
-      style={styles.input}
-      onChangeText={(value) => {
-        setInput(value)
-      }}
-      defaultValue={initialValue === 0 ? '' : initialValue.toString()}
-      keyboardType = 'numeric'
-      maxLength = {1}
-      ></TextInput> */}
     </View>
   )
 }

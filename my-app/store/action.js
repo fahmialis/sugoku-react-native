@@ -38,7 +38,6 @@ export function fetchBoard(difficulty) {
 
 export function validateBoard(data, encodeParams) {
   return(dispatch) => {
-    dispatch(setLoading(true))
     fetch("https://sugoku.herokuapp.com/validate", {
       method: "POST",
       body: encodeParams(data),
@@ -51,18 +50,15 @@ export function validateBoard(data, encodeParams) {
       .catch(err => {
         console.log(err);
       })
-      .finally(_ => {
-        dispatch(setLoading(false))
-      })
   }
 }
 
 export function solveBoard(data, encodeParams) {
   // console.log(payload, 'action payload');
   // const {data, encodeParams} = payload
+  console.log('masuk action');
 
   return(dispatch) => {
-    dispatch(setLoading(true))
     fetch('https://sugoku.herokuapp.com/solve', {
       method: 'POST',
       body: encodeParams(data),
@@ -70,12 +66,9 @@ export function solveBoard(data, encodeParams) {
     })
       .then(response => response.json())
       .then(response => {
-        // console.log(response.solution, 'solution')
+        console.log('masuk then', response.solution);
         dispatch(setBoardSolved(response.solution))
       })
       .catch(console.warn)
-      .finally(_ => {
-        dispatch(setLoading(false))
-      })
   }
 }

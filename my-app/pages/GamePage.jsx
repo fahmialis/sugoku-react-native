@@ -24,9 +24,10 @@ export default function App(props) {
       .join('&');
 
     const data = {board: board}
+    console.log(status, 'sebelum');
 
     dispatch(validateBoard(data, encodeParams))
-    // console.log(status, 'stasdafads');
+    console.log(status, 'sesudha');
     if(status !== 'solved') {
       Alert.alert('Keep trying!',
       "You will get it soon!"
@@ -36,8 +37,8 @@ export default function App(props) {
       `You won SUGOKU on ${difficulty.toUpperCase()} !!`,
     [
       {
-        text: "Play again?",
-        onPress: () => props.navigation.navigate('Home'),
+        text: "OK",
+        onPress: () => props.navigation.replace('Finish', {name, difficulty}),
         style: "default",
       },
     ])
@@ -53,8 +54,6 @@ export default function App(props) {
       .join('&');
 
     const data = {board: initialBoard}
-    // console.log(data, 'data game page');
-
     dispatch(solveBoard(data, encodeParams))
   }
 
@@ -77,7 +76,7 @@ export default function App(props) {
                 <View style={styles.row} key={rowIndex}>
                   {
                     row.map((column, columnIndex) => {
-                      return <BoardInput initialValue={column} key={`${rowIndex},${columnIndex}`}></BoardInput>
+                      return <BoardInput initialValue={column} rowIndex={rowIndex} columnIndex={columnIndex} key={`${rowIndex},${columnIndex}`}></BoardInput>
                     })
                   }
                 </View>
@@ -99,7 +98,7 @@ export default function App(props) {
             <Button
             title='Skip and win :)'
             onPress={() => props.navigation.replace('Finish', {name, difficulty})}
-            ></Button>  
+            ></Button> 
       <StatusBar style="auto" />
     </View>
   );

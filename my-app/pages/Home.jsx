@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const difficultyLevel = [
@@ -40,7 +40,7 @@ export default function Home(props) {
           items={difficultyLevel}
           defaultValue={difficulty}
           containerStyle={{ height: 50, width: 250 }}
-          style={{ backgroundColor: "white", fontSize: 20 }}
+          style={{ backgroundColor: "white", fontSize: 20, marginBottom:10 }}
           itemStyle={{
             justifyContent: "flex-start",
           }}
@@ -57,9 +57,9 @@ export default function Home(props) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems:'center', 
-    backgroundColor: 'lightblue', 
-    height: 1000
+    backgroundColor: 'lightblue'
   },
   title : {
     fontSize:70, 

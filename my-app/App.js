@@ -13,7 +13,6 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <Provider store={store}>
-      <Text>test</Text>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} />
