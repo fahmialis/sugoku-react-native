@@ -24,7 +24,7 @@ export default function App(props) {
       .join('&');
 
     const data = {board: board}
-    
+
     dispatch(validateBoard(data, encodeParams))
     // console.log(status, 'stasdafads');
     if(status !== 'solved') {
@@ -32,7 +32,7 @@ export default function App(props) {
       "You will get it soon!"
       )
     } else { 
-      Alert.alert(`Congrats ${name ? {name} : 'anon'} !!`,
+      Alert.alert(`Congrats ${name ? name : 'anon'} !!`,
       `You won SUGOKU on ${difficulty.toUpperCase()} !!`,
     [
       {
@@ -63,7 +63,7 @@ export default function App(props) {
       {/* <Text>board : {JSON.stringify(board)}</Text> */}
       <View style={styles.title}>
         <Text style={styles.text}>SUGOKU</Text>
-        <Text>Hello { name ? {name} : 'anon' } </Text>
+        <Text>Hello { name ? name : 'anon' } </Text>
         <Text>Playing on { difficulty.toUpperCase() } </Text>
       </View>
       

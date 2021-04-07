@@ -5,7 +5,7 @@ export default function Finish(props) {
   const {name, difficulty}  = props.route.params
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Congrats, {name ? {name} : 'anon'} you have finished SUGOKU on {difficulty.toUpperCase()}!!</Text>
+      <Text style={styles.title}>Congrats, {name ? name : 'anon'} you have finished SUGOKU on {difficulty.toUpperCase()}!!</Text>
       <Button 
         title='Play again'
         onPress={() => props.navigation.navigate('Home')}
