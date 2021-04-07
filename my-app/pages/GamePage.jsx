@@ -13,13 +13,19 @@ export default function App(props) {
 
   useEffect(() => {
     dispatch(fetchBoard(difficulty))
-    // console.log(initialBoard, 'game page');
-    // console.log(board, 'game page board');
   }, [dispatch]);
 
   function validate() {
-    dispatch(validateBoard())
-    // console.log(status, 'stasdafads');
+    const encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length -1 ? '' : '%2C'}`, '')
+
+    const encodeParams = (params) => 
+      Object.keys(params)
+      .map(key => key + '=' + `%5B${encodeBoard(params[key])}%5D`)
+      .join('&');
+
+    const data = {board: board}
+    dispatch(validateBoard(data, encodeParams))
+    console.log(status, 'stasdafads');
     if(status !== 'solved') {
       Alert.alert('Keep trying!',
       "You will get it soon!"
@@ -38,8 +44,17 @@ export default function App(props) {
   }
 
   function solve() {
-    dispatch(solveBoard(initialBoard))
+    const encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length -1 ? '' : '%2C'}`, '')
 
+    const encodeParams = (params) => 
+      Object.keys(params)
+      .map(key => key + '=' + `%5B${encodeBoard(params[key])}%5D`)
+      .join('&');
+
+    const data = {board: initialBoard}
+    // console.log(data, 'data game page');
+
+    dispatch(solveBoard(data, encodeParams))
   }
 
   return (

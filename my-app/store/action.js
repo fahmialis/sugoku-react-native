@@ -36,11 +36,13 @@ export function fetchBoard(difficulty) {
   }
 }
 
-export function validateBoard() {
+export function validateBoard(data, encodeParams) {
   return(dispatch) => {
     dispatch(setLoading(true))
-    fetch(`https://sugoku.herokuapp.com/validate`, {
-      method: 'POST'
+    fetch("https://sugoku.herokuapp.com/validate", {
+      method: "POST",
+      body: encodeParams(data),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     })
       .then(data => data.json())
       .then(res => {
@@ -55,18 +57,9 @@ export function validateBoard() {
   }
 }
 
-export function solveBoard({payload}) {
-  const {initialBoard} = payload
-  console.log(initialBoard, 'initial board');
-
-  const encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length -1 ? '' : '%2C'}`, '')
-
-  const encodeParams = (params) => 
-    Object.keys(params)
-    .map(key => key + '=' + `%5B${encodeBoard(params[key])}%5D`)
-    .join('&');
-
-  const data = {board: initialBoard}
+export function solveBoard(data, encodeParams) {
+  // console.log(payload, 'action payload');
+  // const {data, encodeParams} = payload
 
   return(dispatch) => {
     dispatch(setLoading(true))
@@ -77,7 +70,7 @@ export function solveBoard({payload}) {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response.solution, 'solution')
+        // console.log(response.solution, 'solution')
         dispatch(setBoardSolved(response.solution))
       })
       .catch(console.warn)
