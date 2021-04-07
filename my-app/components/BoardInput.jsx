@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, StyleSheet, View } from "react-native";
+import { TextInput, StyleSheet, View, Text } from "react-native";
 
 export default function BoardInput({initialValue}) {
   const [input, setInput] = useState(initialValue)
@@ -10,7 +10,24 @@ export default function BoardInput({initialValue}) {
 
   return (
     <View>
-      <TextInput
+      {
+        initialValue === 0 ? 
+        <TextInput
+        style={styles.input}
+        onChangeText={(value) => {
+          setInput(value)
+        }}
+        defaultValue={''}
+        keyboardType = 'numeric'
+        maxLength = {1}
+        ></TextInput>
+        :
+        <Text
+        style={styles.input}
+        value={initialValue.toString()}
+        >{initialValue.toString()}</Text>
+      }
+      {/* <TextInput
       style={styles.input}
       onChangeText={(value) => {
         setInput(value)
@@ -18,7 +35,7 @@ export default function BoardInput({initialValue}) {
       defaultValue={initialValue === 0 ? '' : initialValue.toString()}
       keyboardType = 'numeric'
       maxLength = {1}
-      ></TextInput>
+      ></TextInput> */}
     </View>
   )
 }
@@ -30,5 +47,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     margin: 5,
     textAlign: "center",
-  },
+    width: 30,
+    paddingTop: 5
+  }
 });
