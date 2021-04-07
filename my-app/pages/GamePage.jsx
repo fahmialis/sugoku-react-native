@@ -37,7 +37,7 @@ export default function App(props) {
     [
       {
         text: "Play again?",
-        onPress: () => () => props.navigation.navigate('Home'),
+        onPress: () => props.navigation.navigate('Home'),
         style: "default",
       },
     ])
