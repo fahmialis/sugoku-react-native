@@ -16,8 +16,10 @@ function reducer (state = initialState, action) {
     return {...state, board: payload}
   } else if (type === 'initialBoard/getInitialBoard') {
     return {...state, initialBoard: payload}
-  } else if( type === 'status/setStatus') {
+  } else if ( type === 'status/setStatus') {
     return {...state, status: payload}
+  } else if (type === 'board/setBoardSolved') {
+    return {...state, board: payload}
   }
   return state
 }

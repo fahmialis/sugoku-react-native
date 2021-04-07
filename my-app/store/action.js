@@ -1,27 +1,3 @@
-import {useSelector} from 'react-redux'
-
-export function solveBoard() {
-  const {initialBoard} = useSelector(state => state)
-
-  const encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length -1 ? '' : '%2C'}`, '')
-
-  const encodeParams = (params) => 
-    Object.keys(params)
-    .map(key => key + '=' + `%5B${encodeBoard(params[key])}%5D`)
-    .join('&');
-
-  const data = {board: initialBoard}
-
-  fetch('https://sugoku.herokuapp.com/solve', {
-    method: 'POST',
-    body: encodeParams(data),
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-  })
-    .then(response => response.json())
-    .then(response => console.log(response.solution))
-    .catch(console.warn)
-}
-
 export function getBoard(payload) {
   return {type : 'board/getBoard', payload}
 }
@@ -36,6 +12,10 @@ export function setLoading (payload) {
 
 export function setStatus (payload) {
   return {type : 'status/setStatus', payload}
+}
+
+export function setBoardSolved (payload) {
+  return {type : 'board/setBoardSolved', payload}
 }
 
 export function fetchBoard(difficulty) {
@@ -69,6 +49,38 @@ export function validateBoard() {
       .catch(err => {
         console.log(err);
       })
+      .finally(_ => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export function solveBoard({payload}) {
+  const {initialBoard} = payload
+  console.log(initialBoard, 'initial board');
+
+  const encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length -1 ? '' : '%2C'}`, '')
+
+  const encodeParams = (params) => 
+    Object.keys(params)
+    .map(key => key + '=' + `%5B${encodeBoard(params[key])}%5D`)
+    .join('&');
+
+  const data = {board: initialBoard}
+
+  return(dispatch) => {
+    dispatch(setLoading(true))
+    fetch('https://sugoku.herokuapp.com/solve', {
+      method: 'POST',
+      body: encodeParams(data),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response.solution, 'solution')
+        dispatch(setBoardSolved(response.solution))
+      })
+      .catch(console.warn)
       .finally(_ => {
         dispatch(setLoading(false))
       })

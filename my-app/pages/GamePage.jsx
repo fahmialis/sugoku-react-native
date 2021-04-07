@@ -6,19 +6,21 @@ import BoardInput from '../components/BoardInput'
 import { fetchBoard, solveBoard, validateBoard } from '../store/action'
 
 export default function App(props) {
-  const {board, loading} = useSelector ((state) => state)
+  const {board, loading, initialBoard} = useSelector ((state) => state)
   const status = useSelector((state) => state.status)
   const {name, difficulty}  = props.route.params
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchBoard(difficulty))
-  }, []);
+    // console.log(initialBoard, 'game page');
+    // console.log(board, 'game page board');
+  }, [dispatch]);
 
   function validate() {
     dispatch(validateBoard())
     // console.log(status, 'stasdafads');
-    if(status == 'unsolved' || status == 'undefined') {
+    if(status !== 'solved') {
       Alert.alert('Keep trying!',
       "You will get it soon!"
       )
@@ -31,17 +33,19 @@ export default function App(props) {
         onPress: () => () => props.navigation.navigate('Home'),
         style: "default",
       },
-    ]
-      )
-
+    ])
     }
+  }
+
+  function solve() {
+    dispatch(solveBoard(initialBoard))
 
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'lightblue', height: 1000 }}>
+    <View style={styles.container}>
       {/* <Text>board : {JSON.stringify(board)}</Text> */}
-      <View style={{marginBottom: 10, alignItems: 'center'}}>
+      <View style={styles.title}>
         <Text style={styles.text}>SUGOKU</Text>
         <Text>Hello { name ? {name} : 'anon' } </Text>
         <Text>Playing on { difficulty.toUpperCase() } </Text>
@@ -50,7 +54,7 @@ export default function App(props) {
         <View style={styles.board}>
           {
             loading ? <View>
-              <ActivityIndicator size="large" color="blue"/>
+              <ActivityIndicator size="large" color="white"/>
             </View> :
             board.map((row, rowIndex) => {
               return (
@@ -66,10 +70,10 @@ export default function App(props) {
           }
         </View>
 
-          <View style={{flexDirection: 'row', justifyContent:'space-around', marginBottom: 20}}>
+          <View style={styles.button_group}>
             <Button 
             title='Give up'
-            onPress={() => dispatch(solveBoard())}
+            onPress={() => solve()}
             ></Button> 
             <Button 
             title='Check?'
@@ -87,10 +91,15 @@ export default function App(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'stretch',
-    marginTop: 50
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: 'lightblue', 
+    height: 1000
+  },
+  title: {
+    marginBottom: 10, 
+    alignItems: 'center'
   },
   text: {
     fontSize: 40,
@@ -107,5 +116,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     flexDirection: 'row',
     height: 40
+  },
+  button_group: {
+    flexDirection: 'row', 
+    justifyContent:'space-between', 
+    marginBottom: 20
   }
 });

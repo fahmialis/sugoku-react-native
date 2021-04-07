@@ -15,10 +15,7 @@ export default function BoardInput({initialValue}) {
       onChangeText={(value) => {
         setInput(value)
       }}
-      onSubmitEditing={(value)=>{
-        setInput(value)
-      }}
-      defaultValue={initialValue.toString()}
+      defaultValue={initialValue === 0 ? '' : initialValue.toString()}
       keyboardType = 'numeric'
       maxLength = {1}
       ></TextInput>

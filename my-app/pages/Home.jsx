@@ -26,16 +26,16 @@ export default function Home(props) {
   }, [])
 
   return (
-    <View style={{alignItems:'center', backgroundColor: 'lightblue', height: 1000}}>
-      <Text style={{fontSize:70, marginBottom: 30}}>SUGOKU</Text>
-      <Text style={{fontSize:20, marginBottom: 10}}>Name</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>SUGOKU</Text>
+      <Text style={styles.name_title}>Name</Text>
       <TextInput
       placeholder="enter your name"
       onChangeText={(value) => setName(value)}
-      style={{borderWidth:1, width: 200, height: 50, marginBottom: 30, borderColor:'white', backgroundColor: 'white', paddingLeft: 10}}
+      style={styles.name_input}
       ></TextInput>
 
-      <Text style={{fontSize:20, marginBottom: 10}}>Choose difficulty level</Text>
+      <Text style={styles.difficulty_title}>Choose difficulty level</Text>
       <DropDownPicker
           items={difficultyLevel}
           defaultValue={difficulty}
@@ -56,5 +56,32 @@ export default function Home(props) {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    alignItems:'center', 
+    backgroundColor: 'lightblue', 
+    height: 1000
+  },
+  title : {
+    fontSize:70, 
+    marginBottom: 30,
+    marginTop: 50,
+    color: 'white'
+  },
+  name_title: {
+    fontSize:20, 
+    marginBottom: 20
+  },
+  name_input: {
+    borderWidth:1, 
+    width: 200, 
+    height: 50, 
+    marginBottom: 30, 
+    borderColor:'white', 
+    backgroundColor: 'white', 
+    paddingLeft: 10
+  },
+  difficulty_title: {
+    fontSize:20, 
+    marginBottom: 20
+  }
 });
