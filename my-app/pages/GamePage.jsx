@@ -24,15 +24,16 @@ export default function App(props) {
       .join('&');
 
     const data = {board: board}
+    
     dispatch(validateBoard(data, encodeParams))
-    console.log(status, 'stasdafads');
+    // console.log(status, 'stasdafads');
     if(status !== 'solved') {
       Alert.alert('Keep trying!',
       "You will get it soon!"
       )
     } else { 
-      Alert.alert(`Congrats ${name ? {name} : 'anon'}`,
-      `You won SUGOKU on ${difficulty.toUpperCase()}`,
+      Alert.alert(`Congrats ${name ? {name} : 'anon'} !!`,
+      `You won SUGOKU on ${difficulty.toUpperCase()} !!`,
     [
       {
         text: "Play again?",
